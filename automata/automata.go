@@ -22,7 +22,7 @@ func New(initial generation.Generation, e evaluators.Evaluator, r renderers.Rend
 
 func (a *Automata) Step() {
 	lastGeneration := a.generations[len(a.generations)-1]
-	nextGeneration := generation.New(10)
+	nextGeneration := generation.New(len(lastGeneration))
 
 	for locale := range lastGeneration {
 		nextGeneration[locale] = a.evaluator.Evaluate(lastGeneration.NeighborhoodAtLocale(locale))

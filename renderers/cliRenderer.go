@@ -16,9 +16,9 @@ func (r *CliRenderer) Render(generations []generation.Generation) {
 	for _, g := range generations {
 		for _, cell := range g {
 			if cell {
-				fmt.Print("X")
+				fmt.Print("◾")
 			} else {
-				fmt.Print("_")
+				fmt.Print("◽")
 			}
 		}
 

@@ -8,16 +8,15 @@ import (
 )
 
 func main() {
-
 	a := automata.New(
-		generation.New(10),
-		evaluators.NewReverseEvaluator(),
+		generation.NewWithCenterCellOn(25),
+		evaluators.NewRuleOneTwentySixEvaluator(),
 		renderers.NewCliRenderer(),
 	)
 
-	a.Step()
-	a.Step()
-	a.Step()
+	for i := 1; i < 25; i++ {
+		a.Step()
+	}
 
 	a.Render()
 }

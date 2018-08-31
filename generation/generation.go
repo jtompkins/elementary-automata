@@ -10,6 +10,17 @@ func New(size int) Generation {
 	return make(Generation, size)
 }
 
+func NewFromCells(cells ...bool) Generation {
+	return append(make(Generation, 0), cells...)
+}
+
+func NewWithCenterCellOn(size int) Generation {
+	g := make(Generation, size)
+	g[size/2] = true
+
+	return g
+}
+
 func (g Generation) NeighborhoodAtLocale(locale int) Neighborhood {
 	var n Neighborhood
 
