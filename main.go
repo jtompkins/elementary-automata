@@ -1,32 +1,23 @@
 package main
 
 import (
-	"fmt"
-
-	"joshtompkins.com/elementary-automata/types"
+	"joshtompkins.com/elementary-automata/automata"
+	"joshtompkins.com/elementary-automata/evaluators"
+	"joshtompkins.com/elementary-automata/generation"
+	"joshtompkins.com/elementary-automata/renderers"
 )
 
 func main() {
-	fmt.Println("1-dimensional automata are cool!")
 
-	generations := make([]types.Generation, 0)
-	generations = append(generations, types.NewGeneration(10))
+	a := automata.New(
+		generation.New(10),
+		evaluators.NewReverseEvaluator(),
+		renderers.NewCliRenderer(),
+	)
 
-	lastGeneration := generations[len(generations)-1]
+	a.Step()
+	a.Step()
+	a.Step()
 
-	lastGeneration.Print()
-
-	nextGeneration := types.NewGeneration(10)
-
-	for locale := range lastGeneration {
-		nextGeneration[locale] = evaluate(types.NewNeighborhood(lastGeneration, locale))
-	}
-
-	nextGeneration.Print()
-
-	generations = append(generations, nextGeneration)
-}
-
-func evaluate(neighborhood types.Neighborhood) bool {
-	return true
+	a.Render()
 }
