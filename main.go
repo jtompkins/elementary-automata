@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"joshtompkins.com/elementary-automata/automata"
 	"joshtompkins.com/elementary-automata/evaluators"
 	"joshtompkins.com/elementary-automata/generation"
@@ -9,14 +11,23 @@ import (
 
 func main() {
 	a := automata.New(
-		generation.NewWithCenterCellOn(25),
-		evaluators.NewRuleOneTwentySixEvaluator(),
-		renderers.NewCliRenderer(),
+		generation.NewFromCenter(100),
+		evaluators.NewRuleThirtyEvaluator(),
+		renderers.NewImageRenderer(&renderers.ImageRendererOptions{
+			File:  "test.gif",
+			Scale: 10,
+		}),
 	)
 
-	for i := 1; i < 25; i++ {
+	fmt.Println("Evaluting rules...")
+
+	for i := 1; i < 101; i++ {
 		a.Step()
 	}
 
+	fmt.Println("Rendering...")
+
 	a.Render()
+
+	fmt.Println("Done!")
 }

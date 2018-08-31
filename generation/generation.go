@@ -1,6 +1,8 @@
 package generation
 
 import (
+	"math/rand"
+
 	. "joshtompkins.com/elementary-automata/neighborhood"
 )
 
@@ -14,9 +16,21 @@ func NewFromCells(cells ...bool) Generation {
 	return append(make(Generation, 0), cells...)
 }
 
-func NewWithCenterCellOn(size int) Generation {
+func NewFromCenter(size int) Generation {
 	g := make(Generation, size)
 	g[size/2] = true
+
+	return g
+}
+
+func NewFromRandom(size int) Generation {
+	g := make(Generation, size)
+
+	for i := range g {
+		if rand.Intn(2) == 1 {
+			g[i] = true
+		}
+	}
 
 	return g
 }
