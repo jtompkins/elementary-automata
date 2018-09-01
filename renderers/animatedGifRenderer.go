@@ -13,20 +13,15 @@ import (
 	"joshtompkins.com/elementary-automata/generation"
 )
 
-type ImageRendererOptions struct {
-	File  string
-	Scale int
+type AnimatedGifRenderer struct {
+	opts *RenderOptions
 }
 
-type ImageRenderer struct {
-	opts *ImageRendererOptions
+func NewImageRenderer(opts *RenderOptions) *AnimatedGifRenderer {
+	return &AnimatedGifRenderer{opts: opts}
 }
 
-func NewImageRenderer(opts *ImageRendererOptions) *ImageRenderer {
-	return &ImageRenderer{opts: opts}
-}
-
-func (r *ImageRenderer) Render(generations []generation.Generation) {
+func (r *AnimatedGifRenderer) Render(generations []generation.Generation) {
 	scale := r.opts.Scale
 	x := len(generations[0]) * scale
 	y := len(generations) * scale

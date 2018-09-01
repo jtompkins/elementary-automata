@@ -13,8 +13,8 @@ func main() {
 	a := automata.New(
 		generation.NewFromCenter(100),
 		evaluators.NewRuleThirtyEvaluator(),
-		renderers.NewImageRenderer(&renderers.ImageRendererOptions{
-			File:  "test.gif",
+		renderers.NewPngRenderer(&renderers.RenderOptions{
+			File:  "test.png",
 			Scale: 10,
 		}),
 	)
