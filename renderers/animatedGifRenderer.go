@@ -1,7 +1,6 @@
 package renderers
 
 import (
-	"fmt"
 	"image"
 	"image/color"
 	"image/color/palette"
@@ -10,6 +9,7 @@ import (
 	"os"
 
 	"github.com/fogleman/gg"
+	log "github.com/sirupsen/logrus"
 	"joshtompkins.com/elementary-automata/generation"
 )
 
@@ -48,6 +48,10 @@ func (r *AnimatedGifRenderer) Render(generations []generation.Generation) {
 			dc.Fill()
 		}
 
+		log.WithFields(log.Fields{
+			"generation": iY,
+		}).Debug("Writing image")
+
 		// draw the current state of the context as new frame
 		img := dc.Image()
 		bounds := img.Bounds()
@@ -60,17 +64,21 @@ func (r *AnimatedGifRenderer) Render(generations []generation.Generation) {
 	}
 
 	// save the image
-	//dc.SavePNG(r.opts.File)
 	f, err := os.OpenFile(r.opts.File, os.O_WRONLY|os.O_CREATE, 0600)
 	defer f.Close()
 
 	if err != nil {
-		fmt.Println(err)
-		return
+		log.Error("Error opening animated GIF file", err)
+		panic("")
 	}
 
-	gif.EncodeAll(f, &gif.GIF{
+	err = gif.EncodeAll(f, &gif.GIF{
 		Image: images,
 		Delay: delays,
 	})
+
+	if err != nil {
+		log.Error("Error encoding animated GIF", err)
+		panic("")
+	}
 }

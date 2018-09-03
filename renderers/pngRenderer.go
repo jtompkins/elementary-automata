@@ -1,10 +1,10 @@
 package renderers
 
 import (
-	"fmt"
 	"image/color"
 
 	"github.com/fogleman/gg"
+	log "github.com/sirupsen/logrus"
 	"joshtompkins.com/elementary-automata/generation"
 )
 
@@ -44,6 +44,7 @@ func (r *PngRenderer) Render(generations []generation.Generation) {
 	err := dc.SavePNG(r.opts.File)
 
 	if err != nil {
-		panic(fmt.Sprintf("Unable to save rendered image: %s", r.opts.File))
+		log.WithField("filename", r.opts.File).Error("Unable to save rendered image")
+		panic("")
 	}
 }

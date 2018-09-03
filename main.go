@@ -1,33 +1,35 @@
 package main
 
 import (
-	"fmt"
-
+	log "github.com/sirupsen/logrus"
 	"joshtompkins.com/elementary-automata/automata"
 	"joshtompkins.com/elementary-automata/evaluators"
 	"joshtompkins.com/elementary-automata/generation"
 	"joshtompkins.com/elementary-automata/renderers"
+	"joshtompkins.com/elementary-automata/rules"
 )
 
 func main() {
 	a := automata.New(
-		generation.NewFromCenter(100),
-		evaluators.NewRuleThirtyEvaluator(),
+		generation.NewFromCenter(1000),
+		evaluators.NewRuleEvaluator(rules.Thirty),
 		renderers.NewPngRenderer(&renderers.RenderOptions{
 			File:  "test.png",
-			Scale: 10,
+			Scale: 1,
 		}),
 	)
 
-	fmt.Println("Evaluting rules...")
+	log.SetLevel(log.DebugLevel)
 
-	for i := 1; i < 101; i++ {
+	log.Info("Evaluating rules")
+
+	for i := 1; i < 1001; i++ {
 		a.Step()
 	}
 
-	fmt.Println("Rendering...")
+	log.Info("Rendering")
 
 	a.Render()
 
-	fmt.Println("Done!")
+	log.Info("Done")
 }
