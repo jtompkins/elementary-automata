@@ -10,3 +10,7 @@ var Ninety Rule = Rule{
 	true,
 	false,
 }
+
+func init() {
+	register(90, Ninety)
+}

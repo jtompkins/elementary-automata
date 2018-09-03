@@ -10,3 +10,7 @@ var OneTwentySix Rule = Rule{
 	true,
 	false,
 }
+
+func init() {
+	register(126, OneTwentySix)
+}

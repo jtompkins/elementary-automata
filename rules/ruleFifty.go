@@ -10,3 +10,7 @@ var Fifty Rule = Rule{
 	true,
 	false,
 }
+
+func init() {
+	register(50, Fifty)
+}
