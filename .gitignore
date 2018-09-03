@@ -10,3 +10,9 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+# Fakes
+*/*fakes/fake_*.go
+
+# Image output
+*.png
