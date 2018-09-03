@@ -15,4 +15,4 @@
 */*fakes/fake_*.go
 
 # Image output
-*.png
+/*.png
