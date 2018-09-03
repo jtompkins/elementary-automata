@@ -1,9 +1,12 @@
 package renderers
 
 import (
+	"image"
 	"image/color"
+	"image/draw"
+	"image/png"
+	"os"
 
-	"github.com/fogleman/gg"
 	log "github.com/sirupsen/logrus"
 	"joshtompkins.com/elementary-automata/generation"
 )
@@ -22,12 +25,10 @@ func (r *PngRenderer) Render(generations []generation.Generation) {
 	height := len(generations) * scale
 
 	// create the image
-	dc := gg.NewContext(width, height)
+	img := image.NewGray(image.Rect(0, 0, width, height))
 
 	// draw a white background
-	dc.DrawRectangle(0, 0, float64(width), float64(height))
-	dc.SetColor(color.White)
-	dc.Fill()
+	draw.Draw(img, img.Bounds(), image.White, image.ZP, draw.Src)
 
 	for iY, generation := range generations {
 		for iX, cell := range generation {
@@ -35,16 +36,32 @@ func (r *PngRenderer) Render(generations []generation.Generation) {
 				continue
 			}
 
-			dc.DrawRectangle(float64(iX*scale), float64(iY*scale), float64(scale), float64(scale))
-			dc.SetColor(color.Black)
-			dc.Fill()
+			r.drawCell(img, iX, iY, color.Black)
 		}
 	}
 
-	err := dc.SavePNG(r.opts.File)
+	f, err := os.Create(r.opts.File)
+	defer f.Close()
 
 	if err != nil {
 		log.WithField("filename", r.opts.File).Error("Unable to save rendered image")
-		panic("")
+		panic(err)
+	}
+
+	err = png.Encode(f, img)
+
+	if err != nil {
+		panic(err)
+	}
+}
+
+func (r *PngRenderer) drawCell(img draw.Image, locale, generation int, c color.Color) {
+	x := locale * r.opts.Scale
+	y := generation * r.opts.Scale
+
+	for iX := x; iX < x+r.opts.Scale; iX++ {
+		for iY := y; iY < y+r.opts.Scale; iY++ {
+			img.Set(iX, iY, c)
+		}
 	}
 }
