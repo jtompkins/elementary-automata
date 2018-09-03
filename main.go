@@ -12,7 +12,7 @@ import (
 func main() {
 	a := automata.New(
 		generation.NewFromCenter(1000),
-		evaluators.NewRuleEvaluator(rules.Thirty),
+		evaluators.NewRuleEvaluator(rules.OneTwentySix),
 		renderers.NewPngRenderer(&renderers.RenderOptions{
 			File:  "test.png",
 			Scale: 1,
