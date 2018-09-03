@@ -3,11 +3,9 @@ package neighborhood
 type Neighborhood []bool
 
 func (n Neighborhood) Equals(m Neighborhood) bool {
-	if len(n) != len(m) {
+	if len(m) != 3 {
 		return false
 	}
-
-	result := true
 
 	for i := range n {
 		if n[i] != m[i] {
@@ -15,5 +13,5 @@ func (n Neighborhood) Equals(m Neighborhood) bool {
 		}
 	}
 
-	return result
+	return true
 }
