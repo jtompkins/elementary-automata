@@ -26,16 +26,13 @@ type RuleEvaluator struct {
 }
 
 func NewRuleEvaluator(r rules.Rule) *RuleEvaluator {
-	return &RuleEvaluator{r}
+	return &RuleEvaluator{rule: r}
 }
 
 func (e *RuleEvaluator) Evaluate(n neighborhood.Neighborhood) bool {
 	// find the matching neighborhood
-	match, err := e.findMatchingNeighborhood(n)
-
-	if err != nil {
-		panic(err.Error)
-	}
+	// drop the error case since all possible neighborhoods are in the slice
+	match, _ := e.findMatchingNeighborhood(n)
 
 	return e.rule[match]
 }
