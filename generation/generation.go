@@ -2,29 +2,30 @@ package generation
 
 import (
 	"math/rand"
+	"time"
 
 	. "joshtompkins.com/elementary-automata/neighborhood"
 )
 
+func init() {
+	rand.Seed(time.Now().Unix())
+}
+
 type Generation []bool
 
 func New(size int) Generation {
-	return make(Generation, size)
-}
-
-func NewFromCells(cells ...bool) Generation {
-	return append(make(Generation, 0), cells...)
+	return make(Generation, size, size)
 }
 
 func NewFromCenter(size int) Generation {
-	g := make(Generation, size)
+	g := make(Generation, size, size)
 	g[size/2] = true
 
 	return g
 }
 
 func NewFromRandom(size int) Generation {
-	g := make(Generation, size)
+	g := make(Generation, size, size)
 
 	for i := range g {
 		if rand.Intn(2) == 1 {
@@ -40,14 +41,13 @@ func (g Generation) NeighborhoodAtLocale(locale int) Neighborhood {
 
 	switch {
 	case locale == 0:
-		n = Neighborhood{false}
-		n = append(n, g[:locale+2]...)
+		n = append(Neighborhood{false}, g[:locale+2]...)
 	case locale == len(g)-1:
-		n = make(Neighborhood, 2)
+		n = make(Neighborhood, 2, 3)
 		copy(n, g[locale-1:])
 		n = append(n, false)
 	default:
-		n = make(Neighborhood, 3)
+		n = make(Neighborhood, 3, 3)
 		copy(n, g[locale-1:locale+2])
 	}
 

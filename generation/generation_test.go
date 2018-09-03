@@ -1,6 +1,8 @@
 package generation_test
 
 import (
+	"math/rand"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
@@ -10,6 +12,53 @@ import (
 
 var _ = Describe("Generation", func() {
 	var generation Generation
+
+	Describe("New", func() {
+		BeforeEach(func() {
+			generation = New(3)
+		})
+
+		It("returns a generation with correct length and capacity", func() {
+			Expect(len(generation)).To(Equal(3))
+			Expect(cap(generation)).To(Equal(3))
+		})
+	})
+
+	Describe("NewFromCenter", func() {
+		BeforeEach(func() {
+			generation = NewFromCenter(4)
+		})
+
+		It("returns a generation with correct length and capacity", func() {
+			Expect(len(generation)).To(Equal(4))
+			Expect(cap(generation)).To(Equal(4))
+		})
+
+		It("returns a generation with the center cell turned on", func() {
+			Expect(generation).To(Equal(Generation{false, false, true, false}))
+		})
+
+		Context("when the length is an odd number", func() {
+			BeforeEach(func() {
+				generation = NewFromCenter(5)
+			})
+
+			It("rounds down when determining the center cell", func() {
+				Expect(generation[2]).To(Equal(true))
+			})
+		})
+	})
+
+	Describe("NewFromRandom", func() {
+		BeforeEach(func() {
+			rand.Seed(1)
+			generation = NewFromRandom(3)
+		})
+
+		It("fills in the cells randomly", func() {
+			Expect(generation).To(Equal(Generation{true, true, true}))
+		})
+	})
 
 	Describe("NeighborhoodAtLocale", func() {
 		BeforeEach(func() {
