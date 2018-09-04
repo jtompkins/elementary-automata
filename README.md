@@ -14,7 +14,14 @@ A simple program to generate images for Wolfram's [elementary automata](http://m
 | ------- | ------------------------------------------------------------------ | ------- |
 | `-s`    | How large is each generation?                                      | 1000    |
 | `-g`    | How many generations should be simulated?                          | 1000    |
+| `-c`    | Create the initial generation with a centered "on" cell            | false   |
 | `scale` | How large should each cell appear in the output image (in pixels)? | 1       |
+| `rule`  | Which elementary automata rule should be used? (30, 50, 126, etc)  | N/      |
+
+## Running locally
+
+1. `go get ./...`
+1. `go run main.go -c 126 ~/one-twenty-six.png` (produces the image above)
 
 ## Testing
 
