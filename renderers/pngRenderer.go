@@ -7,7 +7,6 @@ import (
 	"image/png"
 	"os"
 
-	log "github.com/sirupsen/logrus"
 	"joshtompkins.com/elementary-automata/generation"
 )
 
@@ -44,7 +43,6 @@ func (r *PngRenderer) Render(generations []generation.Generation) {
 	defer f.Close()
 
 	if err != nil {
-		log.WithField("filename", r.opts.File).Error("Unable to save rendered image")
 		panic(err)
 	}
 
