@@ -1,6 +1,6 @@
 # elementary-automata
 
-A simple program to generate images for Wolfram's [elementary automata](). The output looks like this (for [rule 126]()):
+A simple program to generate images for Wolfram's [elementary automata](http://mathworld.wolfram.com/ElementaryCellularAutomaton.html). The output looks like this (for [rule 126](http://mathworld.wolfram.com/Rule126.html)):
 
 ![rule 126 output](assets/one-twenty-six.png)
 
@@ -18,7 +18,8 @@ A simple program to generate images for Wolfram's [elementary automata](). The o
 
 ## Testing
 
-You need [Ginkgo](), [Gomega](), and [Counterfeiter]() installed to run the tests.
+You need [Ginkgo](https://github.com/onsi/ginkgo), [Gomega](https://github.com/onsi/gomega), and [Counterfeiter](https://github.com/maxbrunsfeld/counterfeiter) installed to run the tests.
 
+1. `go get ./...`
 1. `go generate ./...`
 1. `go test ./...` _or_ `ginkgo -r`
